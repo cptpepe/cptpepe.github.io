@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Crypto Apes Clone</title>
+  <title>Ethscribed Frogs</title>
   <script src="https://cdn.jsdelivr.net/npm/web3@1.3.4/dist/web3.min.js"></script>
 </head>
 <body>
-  <h1>Crypto Apes Clone</h1>
-  <p>Welcome to our Crypto Apes clone!</p>
+  <h1>Ethscribed Frogs</h1>
+  <p>Welcome to our Ethscribed Frogs clone!</p>
   <button id="connectButton">Connect Wallet</button>
+  <button id="mintButton">Mint</button>
   <p id="account"></p>
+  <a href="https://twitter.com/EthsFrogs" target="_blank"><button>Twitter</button></a>
+  <a href="https://etherscan.io/address/0x408cc691998638E14C23EEa02532A0c2711A1219" target="_blank"><button>Etherscan</button></a>
+  <a href="https://discord.com/" target="_blank"><button>Discord</button></a>
 
   <script>
     let web3;
     let account;
 
     const connectButton = document.getElementById('connectButton');
+    const mintButton = document.getElementById('mintButton');
     const accountParagraph = document.getElementById('account');
 
     connectButton.addEventListener('click', async () => {
@@ -26,6 +31,30 @@
         accountParagraph.textContent = 'Connected: ' + account;
       } else {
         alert('Please install MetaMask!');
+      }
+    });
+
+    mintButton.addEventListener('click', async () => {
+      if (!web3) {
+        alert('Please connect your wallet first!');
+        return;
+      }
+
+      const transactionParameters = {
+        to: '0x408cc691998638E14C23EEa02532A0c2711A1219', 
+        from: account, 
+        value: web3.utils.toWei('0.0019', 'ether'), 
+        data: '0xa0712d680000000000000000000000000000000000000000000000000000000000000001' 
+      };
+
+      try {
+        const txHash = await window.ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [transactionParameters],
+        });
+        console.log('Transaction sent:', txHash);
+      } catch (error) {
+        console.error('An error occurred:', error);
       }
     });
   </script>
