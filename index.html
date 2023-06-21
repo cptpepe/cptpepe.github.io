@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crypto Apes Clone</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.3.4/dist/web3.min.js"></script>
+</head>
+<body>
+  <h1>Crypto Apes Clone</h1>
+  <p>Welcome to our Crypto Apes clone!</p>
+  <button id="connectButton">Connect Wallet</button>
+  <p id="account"></p>
+
+  <script>
+    let web3;
+    let account;
+
+    const connectButton = document.getElementById('connectButton');
+    const accountParagraph = document.getElementById('account');
+
+    connectButton.addEventListener('click', async () => {
+      if (window.ethereum) {
+        web3 = new Web3(window.ethereum);
+        await window.ethereum.enable();
+        const accounts = await web3.eth.getAccounts();
+        account = accounts[0];
+        accountParagraph.textContent = 'Connected: ' + account;
+      } else {
+        alert('Please install MetaMask!');
+      }
+    });
+  </script>
+</body>
+</html>
